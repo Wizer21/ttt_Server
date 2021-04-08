@@ -10,6 +10,10 @@ const server = http.createServer((req, res) => {
     
     answer.end("done" + req)
   }
+  else{    
+    res.statusCode = 200;
+    res.end('End');
+  }
 });
 
 server.listen(port, hostname, () => {
