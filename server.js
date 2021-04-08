@@ -5,8 +5,8 @@ const hostname = '51.75.20.93';
 const port = 3000;
 
 const server = http.createServer((req, res) => {
-  const url_parts = url.parse(request.url, true).pathname
-  if(request.method === 'GET'){
+  const url_parts = url.parse(req.url, true).pathname
+  if(req.method === 'GET'){
     
     answer.end("done" + req)
   }
