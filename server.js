@@ -102,23 +102,46 @@ const server = http.createServer((req, res) => {
       const p1 = getUser(url_query['p1'])
       const p2 = getUser(url_query['p2'])
       
-      if (p1 || p2){
+      if (p1 && p2){
         let id = rooms.length
         rooms.push({
           id: id,
           p1: p1,
-          p1: p2
+          p1: p2,
+          turn: "red"
         })
   
         p1.mailBox = [{
           type: "game",
+          player: "red",
           room: id
         }]
         p2.mailBox = [{
           type: "game",
+          player: "blue",
           room: id
         }]
+
+        res.end("done")
       }
+      else{
+        res.end("user not found")
+      }
+    }
+    else if (url_parts == "/clearGameInvite"){
+      const url_query = url.parse(req.url, true).query
+      const user = getUser(url_query['username'])
+      if (user){
+        for (let i = 0; i < user.mailBox.length; i++ ){
+          if (user.mailBox[i].type == "game")
+          {
+            user.mailBox.splice(i, 1)
+            res.end("done")
+            return
+          }
+        }
+      }
+      res.end("user not found")
     }
   }
 })
